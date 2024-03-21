@@ -1,0 +1,2 @@
+D:\unity\Tetris\Tetris\obj\Debug\Assembly-CSharp.csproj.AssemblyReference.cache
+D:\unity\Tetris\Tetris\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
