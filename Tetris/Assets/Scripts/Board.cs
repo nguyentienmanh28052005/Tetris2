@@ -11,6 +11,9 @@ public class Board : MonoBehaviour
     public TetrominoData[] tetrominoes;
     public Vector3Int spawnPosition;
     public Vector2Int boardSize = new Vector2Int(10, 20);
+    [SerializeField] BoardHole boardHole;
+
+    int cnt = 0;
     
 
   public RectInt Bounds {
@@ -36,6 +39,7 @@ public class Board : MonoBehaviour
         SpawnPiece();   
     }
 
+
     public void SpawnPiece()
     {
         int random = Random.Range(0, tetrominoes.Length);
@@ -49,8 +53,26 @@ public class Board : MonoBehaviour
             GameOver();
         }
         Set(activePiece);
-
-        
+    }
+    
+    public void ClearHole(Piece piece)
+    {
+        for(int i = 0; i < piece.cells.Length; i++)
+        {
+            Vector3Int tilePosition = piece.cells[i] + piece.position;
+            this.tilemap.SetTile(tilePosition, null);    
+        }
+        // if(cnt == 0){
+        //     SpawnPiece();cnt=1;
+        // }
+    }
+    public void SetHole(PieceHole piece)
+    {
+        for(int i = 0; i < piece.cells.Length; i++)
+        {
+            Vector3Int tilePosition = piece.cells[i] + piece.position;
+            this.tilemap.SetTile(tilePosition, piece.data.tile);    
+        }
     }
 
     private void GameOver()

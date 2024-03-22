@@ -15,6 +15,7 @@ public class Piece : MonoBehaviour
     public Vector3Int[] cells { get; private set; }
     public Vector3Int position { get; private set; }
     public int rotationIndex { get; private set; }
+    [SerializeField] PieceHole pieceHole;
 
     public float stepDelay = 1f;
     public float lockDelay = 0.5f;
@@ -83,6 +84,11 @@ public class Piece : MonoBehaviour
             Step();
         }
         this.board.Set(this);
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            this.board.ClearHole(this);
+            this.board.SetHole(pieceHole);
+        }
     }
 
     private void move(int x)

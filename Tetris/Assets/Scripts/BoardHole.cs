@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -6,41 +8,51 @@ using UnityEngine.Tilemaps;
 public class BoardHole : MonoBehaviour
 {
     public Tilemap tilemap { get; private set;}
-    public Piece activePiece { get; private set; }
+    public PieceHole activePiece { get; private set; }
     public Vector3Int spawnPosition;
     //private TetrominoData tetrominoes;
     public Vector2Int boardSize = new Vector2Int(10, 20);
     public Vector3Int[] cells { get; private set; }
     //public TetrominoData tetromino;
     public Piece piece;
+    static int cnt = 0;
+    TetrominoData data;
+
+    
 
     private void Awake()
     {
-
         this.tilemap = GetComponentInChildren<Tilemap>();
-        this.activePiece = GetComponent<Piece>();
-        //piece.data.Initialize();
+        this.activePiece = GetComponentInChildren<PieceHole>();
         
-        // for(int i = 0; i < tetrominoes.Length; i++)
+    }
 
-        // }
+    private void Start()
+    {
+        this.data = piece.data;
     }
    
     private void Update()
     {
-       SpawnPiece();
+       if(Input.GetKeyDown(KeyCode.X)){
+            if(cnt != 0) 
+            {
+                Clear(activePiece);
+            }
+            SpawnPiece();cnt=1;
+       }
     }
-  
+
     public void SpawnPiece()
     {
-       //int random = Random.Range(0, tetrominoes.Length);
+       //int random = Random.Range(0, tetrominoes.Length); 
         TetrominoData data = piece.data;
-        activePiece.Initialize(this, spawnPosition, data);
+        activePiece.Initializel(this, spawnPosition, data);
         Set(activePiece);
     }
 
 
-    public void Set(Piece piece)
+    public void Set(PieceHole piece)
     {
         for(int i = 0; i < piece.cells.Length; i++)
         {
@@ -50,7 +62,7 @@ public class BoardHole : MonoBehaviour
     }
 
 
-        public void Clear(Piece piece)
+        public void Clear(PieceHole piece)
     {
         for(int i = 0; i < piece.cells.Length; i++)
         {
