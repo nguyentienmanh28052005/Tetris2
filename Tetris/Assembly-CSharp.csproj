@@ -44,6 +44,8 @@
      <Compile Include="Assets\Scripts\BoardHole.cs" />
      <Compile Include="Assets\Scripts\Data.cs" />
      <Compile Include="Assets\Scripts\Piece.cs" />
+     <Compile Include="Assets\Scripts\BoardNext.cs" />
+     <Compile Include="Assets\Scripts\PieceNext.cs" />
     <Reference Include="UnityEngine">
         <HintPath>D:\unity\2020.3.38f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

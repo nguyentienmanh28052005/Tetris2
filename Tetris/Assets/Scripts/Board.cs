@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
@@ -11,12 +12,14 @@ public class Board : MonoBehaviour
     public TetrominoData[] tetrominoes;
     public Vector3Int spawnPosition;
     public Vector2Int boardSize = new Vector2Int(10, 20);
+
     [SerializeField] BoardHole boardHole;
+    [SerializeField] PieceNext pieceNext;
+    [SerializeField] BoardNext boardNext;
+
 
     int cnt = 0;
-    
-
-  public RectInt Bounds {
+    public RectInt Bounds{
         get
         {
             Vector2Int position = new Vector2Int(-boardSize.x / 2, -boardSize.y / 2);
@@ -31,19 +34,53 @@ public class Board : MonoBehaviour
         for(int i = 0; i < tetrominoes.Length; i++)
         {
             this.tetrominoes[i].Initialize();
-        }
+        }  
     }
 
     private void Start()
     {
         SpawnPiece();   
     }
+    private void LateUpdate()
+    {
+        Swap();            
+    }
 
+    private void Swap()
+    {
+        if(Input.GetMouseButtonDown(1))
+            {
+                if(cnt != 0)
+                {
+                TetrominoData saveData = activePiece.data;
+                Clear(activePiece);
+                if(IsValidPositionHole(boardHole.activePiece, activePiece.position))
+                {
+                    activePiece.Initialize(this, activePiece.position, boardHole.activePiece.data);
+                }else{
+                    return;
+                    // activePiece.position.x+=2;
+                    // activePiece.Initialize(this, activePiece.position, boardHole.activePiece.data); 
+                }              
+                boardHole.Clear(boardHole.activePiece);
+                boardHole.activePiece.Initializel(boardHole, boardHole.spawnPosition, saveData);
+                boardHole.Set(boardHole.activePiece);            
+                }
+                else{
+                boardHole.SpawnPiece();
+                Clear(activePiece);
+                SpawnPiece(); cnt = 1;
+                }
+            
+            }      
+    }
 
     public void SpawnPiece()
     {
-        int random = Random.Range(0, tetrominoes.Length);
-        TetrominoData data = tetrominoes[random];
+        //int random = Random.Range(0, tetrominoes.Length);
+        boardNext.Clear(pieceNext);
+        TetrominoData data = pieceNext.data;
+        boardNext.SpawnPiece();
         activePiece.Initialize(this, spawnPosition, data);
         if(IsValidPosition(this.activePiece, this.spawnPosition))
         {
@@ -52,9 +89,8 @@ public class Board : MonoBehaviour
         else{
             GameOver();
         }
-        Set(activePiece);
     }
-    
+
     public void ClearHole(Piece piece)
     {
         for(int i = 0; i < piece.cells.Length; i++)
@@ -62,10 +98,8 @@ public class Board : MonoBehaviour
             Vector3Int tilePosition = piece.cells[i] + piece.position;
             this.tilemap.SetTile(tilePosition, null);    
         }
-        // if(cnt == 0){
-        //     SpawnPiece();cnt=1;
-        // }
     }
+    
     public void SetHole(PieceHole piece)
     {
         for(int i = 0; i < piece.cells.Length; i++)
@@ -74,11 +108,12 @@ public class Board : MonoBehaviour
             this.tilemap.SetTile(tilePosition, piece.data.tile);    
         }
     }
-
+    
     private void GameOver()
     {
         this.tilemap.ClearAllTiles();
     }
+    
     public void Set(Piece piece)
     {
         for(int i = 0; i < piece.cells.Length; i++)
@@ -87,8 +122,8 @@ public class Board : MonoBehaviour
             this.tilemap.SetTile(tilePosition, piece.data.tile);    
         }
     }
-
-        public void Clear(Piece piece)
+    
+    public void Clear(Piece piece)
     {
         for(int i = 0; i < piece.cells.Length; i++)
         {
@@ -96,7 +131,7 @@ public class Board : MonoBehaviour
             this.tilemap.SetTile(tilePosition, null);    
         }
     }
-
+    
     public bool IsValidPosition(Piece piece, Vector3Int position)
     {
         RectInt bounds = this.Bounds;
@@ -117,6 +152,28 @@ public class Board : MonoBehaviour
 
         return true;
     }
+    
+    public bool IsValidPositionHole(PieceHole piece, Vector3Int position)
+    {
+        RectInt bounds = this.Bounds;
+        for(int i = 0; i < piece.cells.Length; i++)
+        {
+            Vector3Int tilePosition = piece.cells[i] + position;
+
+            if(!bounds.Contains((Vector2Int)tilePosition))
+            {
+                return false;
+            }
+            
+            if(this.tilemap.HasTile(tilePosition))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
     public void ClearLines()
     {
         RectInt bounds = this.Bounds;
@@ -133,7 +190,7 @@ public class Board : MonoBehaviour
         }
 
     }
-
+    
     private bool IsLineFull(int row)
     {
         RectInt bounds = this.Bounds;
@@ -148,7 +205,7 @@ public class Board : MonoBehaviour
         }
         return true;
     }
-
+    
     private void LineClear(int row)
     {
         RectInt bounds = this.Bounds;
