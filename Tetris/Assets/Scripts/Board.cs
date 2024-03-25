@@ -13,9 +13,13 @@ public class Board : MonoBehaviour
     public Vector3Int spawnPosition;
     public Vector2Int boardSize = new Vector2Int(10, 20);
 
+    public Diem _diem;
+
     [SerializeField] BoardHole boardHole;
     [SerializeField] PieceNext pieceNext;
     [SerializeField] BoardNext boardNext;
+
+    public int diem = 0;
 
 
     int cnt = 0;
@@ -27,6 +31,7 @@ public class Board : MonoBehaviour
         }
     }
 
+  
     private void Awake()
     {
         this.tilemap = GetComponentInChildren<Tilemap>();
@@ -189,6 +194,7 @@ public class Board : MonoBehaviour
             }
         }
 
+
     }
     
     private bool IsLineFull(int row)
@@ -208,6 +214,8 @@ public class Board : MonoBehaviour
     
     private void LineClear(int row)
     {
+        diem+=100;
+        _diem.UpdateDiem();
         RectInt bounds = this.Bounds;
         for(int col = bounds.xMin; col < bounds.xMax; col++)
         {
