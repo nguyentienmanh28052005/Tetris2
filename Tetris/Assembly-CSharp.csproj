@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Data.cs" />
      <Compile Include="Assets\Scripts\Piece.cs" />
      <Compile Include="Assets\Map\StartScenes.cs" />
+     <Compile Include="Assets\Scripts\PauseMenu.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

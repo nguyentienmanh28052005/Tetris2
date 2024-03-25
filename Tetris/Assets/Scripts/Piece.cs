@@ -79,7 +79,7 @@ public class Piece : MonoBehaviour
                 IF(3);
             }
         } 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             HandDrop();
         }
