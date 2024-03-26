@@ -1,4 +1,6 @@
 using System.Numerics;
+using System.Xml.Serialization;
+using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -14,12 +16,19 @@ public class Board : MonoBehaviour
     public Vector2Int boardSize = new Vector2Int(10, 20);
 
     public Diem _diem;
+    public Level _level;
 
     [SerializeField] BoardHole boardHole;
     [SerializeField] PieceNext pieceNext;
     [SerializeField] BoardNext boardNext;
 
-    public int diem = 0;
+    public int diem;
+
+    public int level;
+
+    int x = 500;
+
+
 
 
     int cnt = 0;
@@ -45,10 +54,23 @@ public class Board : MonoBehaviour
     private void Start()
     {
         SpawnPiece();   
+        _level.UpdateLevel();
     }
-    private void LateUpdate()
+
+    private void Update(){
+        Level();
+        Swap();
+    }
+
+    
+    private void Level()
     {
-        Swap();            
+        if(diem >= x){
+            x+=500;
+            level+=1;
+            _level.UpdateLevel();
+            activePiece.stepDelay  -= activePiece.stepDelay*0.25f;
+        }
     }
 
     private void Swap()

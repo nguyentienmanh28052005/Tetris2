@@ -13,7 +13,8 @@ public class Diem : MonoBehaviour
 
     public void UpdateDiem()
     {
-        diem.text = board.diem.ToString();
-
+        diem.text = "Score : " + board.diem.ToString();
     }
+
+
 }

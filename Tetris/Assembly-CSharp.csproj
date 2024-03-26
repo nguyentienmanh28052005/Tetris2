@@ -37,10 +37,12 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Hole.cs" />
+     <Compile Include="Assets\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\PieceNext.cs" />
      <Compile Include="Assets\Scripts\Ghost.cs" />
      <Compile Include="Assets\Scripts\Board.cs" />
      <Compile Include="Assets\Scripts\Diem.cs" />
+     <Compile Include="Assets\Scripts\Level.cs" />
      <Compile Include="Assets\Scripts\PieceHole.cs" />
      <Compile Include="Assets\Scripts\BoardNext.cs" />
      <Compile Include="Assets\Scripts\Tetromino.cs" />
@@ -48,7 +50,6 @@
      <Compile Include="Assets\Scripts\Data.cs" />
      <Compile Include="Assets\Scripts\Piece.cs" />
      <Compile Include="Assets\Map\StartScenes.cs" />
-     <Compile Include="Assets\Scripts\PauseMenu.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
