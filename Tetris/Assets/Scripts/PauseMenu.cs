@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Experimental.TerrainAPI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject pauseMenu;
+
+    public GameObject setting;
     //public GameObject _startMenu;
 
     public static bool isPause;
@@ -56,6 +59,21 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
     }
-    // Update is called once per frame
+    
+    public void Quit()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void Setting(){
+        setting.SetActive(true);
+        pauseMenu.SetActive(false);
+    }
+    public void Back()
+    {
+        setting.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+    
     
 }
