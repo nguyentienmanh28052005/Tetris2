@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class Board : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class Board : MonoBehaviour
     public Level _level;
 
     [SerializeField] BoardHole boardHole;
-    [SerializeField] PieceNext pieceNext;
+    //[SerializeField] List<TetrominoData> pieceNext;
     [SerializeField] BoardNext boardNext;
 
     public int diem;
@@ -105,11 +106,14 @@ public class Board : MonoBehaviour
 
     public void SpawnPiece()
     {
-        //int random = Random.Range(0, tetrominoes.Length);
-        boardNext.Clear(pieceNext);
-        TetrominoData data = pieceNext.data;
+        TetrominoData dataCopy = boardNext.pieceNexts[0];
+        boardNext.pieceNexts.Remove(boardNext.pieceNexts[0]);
+        int random = Random.Range(0, tetrominoes.Length);
+        TetrominoData data = tetrominoes[random];
+        boardNext.pieceNexts.Add(data);  
+        boardNext.Clear();
         boardNext.SpawnPiece();
-        activePiece.Initialize(this, spawnPosition, data);
+        activePiece.Initialize(this, spawnPosition, dataCopy);
         if(IsValidPosition(this.activePiece, this.spawnPosition))
         {
             Set(this.activePiece);
